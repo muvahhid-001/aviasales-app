@@ -12,7 +12,7 @@ export const getId = () => async (dispatch) => {
   dispatch({ type: 'FETCH_REQUEST' });
 
   try {
-    const response = await fetch('https://aviasales-test-api.kata.academy/search');
+    const response = await fetch(`${process.env.REACT_APP_API_ID}`);
     const data = await response.json();
 
     dispatch({ type: 'FETCH_ID_SUCCESS', payload: data });
@@ -30,7 +30,7 @@ export const getTickets = (id) => async (dispatch) => {
 
   while (!stop) {
     try {
-      const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${id}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}${id}`);
 
       if (response.status === 500) {
         continue;
