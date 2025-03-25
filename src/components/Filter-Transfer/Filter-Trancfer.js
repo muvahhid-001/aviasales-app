@@ -3,7 +3,9 @@ import './Filter-Transfer.scss';
 import { all, off, noTransfers, oneTransfers, twoTransfers, threeTransfers } from '../Actions/Actions';
 
 const FilterTransfer = () => {
-  const { filterTransfer } = useSelector((state) => state);
+  const filterTransfer = useSelector((state) => state.filterTransfer);
+  const btStatus = useSelector((state) => state.btStatus);
+
   const dispatch = useDispatch();
 
   const handleAllChange = (e) => {
@@ -15,7 +17,7 @@ const FilterTransfer = () => {
   };
 
   return (
-    <div className="filter-transfer">
+    <div className={`filter-transfer ${btStatus === true ? 'burger-active' : null}`}>
       <ul className="filter-transfer__list-filter">
         <p className="filter-transfer__list-filter-title">КОЛИЧЕСТВО ПЕРЕСАДОК</p>
         <li className="filter-transfer__list-filter__list-li">

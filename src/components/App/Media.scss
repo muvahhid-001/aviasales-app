@@ -1,0 +1,43 @@
+@media (max-width: 890px) {
+  .burger {
+    display: block !important;
+  }
+  .filter-transfer {
+    position: fixed;
+    transition: 0.4s;
+    top: 0;
+    height: 100% !important;
+    left: -240px;
+    &__list-filter {
+      border-radius: 0;
+      height: 100%;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .burger {
+    position: absolute !important;
+    opacity: 0 !important;
+    width: 50px !important;
+    height: 50px !important;
+    top: 53px !important;
+  }
+}
+@media (max-width: 525px) {
+  .section__filter {
+    display: flex;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+    &__button {
+      height: 40px;
+      width: 100%;
+    }
+  }
+}
+.burger-active {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+}

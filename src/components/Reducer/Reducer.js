@@ -1,6 +1,16 @@
 const initialState = {
   raceSort: 'CHEAPEST',
-  filterTransfer: { all: false, noTransfers: false, oneTransfers: false, twoTransfers: false, threeTransfers: false },
+  filterTransfer: {
+    all: true,
+    noTransfers: true,
+    oneTransfers: true,
+    twoTransfers: true,
+    threeTransfers: true,
+  },
+  loading: true,
+  error: null,
+  id: null,
+  btStatus: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,41 +44,41 @@ const reducer = (state = initialState, action) => {
         },
       };
     case 'NOTRANSFERS': {
-      const newNoTransfers = !state.filterTransfer.noTransfers;
-      const newFT = {
-        ...state.filterTransfer,
-        noTransfers: newNoTransfers,
-      };
-      newFT.all = newFT.noTransfers && newFT.oneTransfers && newFT.twoTransfers && newFT.threeTransfers;
+      const newFT = { ...state.filterTransfer, noTransfers: !state.filterTransfer.noTransfers };
+      newFT.all = Object.values(newFT).slice(1).every(Boolean);
       return { ...state, filterTransfer: newFT };
     }
     case 'ONETRANSFERS': {
-      const newOneTransfers = !state.filterTransfer.oneTransfers;
-      const newFT = {
-        ...state.filterTransfer,
-        oneTransfers: newOneTransfers,
-      };
-      newFT.all = newFT.noTransfers && newFT.oneTransfers && newFT.twoTransfers && newFT.threeTransfers;
+      const newFT = { ...state.filterTransfer, oneTransfers: !state.filterTransfer.oneTransfers };
+      newFT.all = Object.values(newFT).slice(1).every(Boolean);
       return { ...state, filterTransfer: newFT };
     }
     case 'TWOTRANSFERS': {
-      const newTwoTransfers = !state.filterTransfer.twoTransfers;
-      const newFT = {
-        ...state.filterTransfer,
-        twoTransfers: newTwoTransfers,
-      };
-      newFT.all = newFT.noTransfers && newFT.oneTransfers && newFT.twoTransfers && newFT.threeTransfers;
+      const newFT = { ...state.filterTransfer, twoTransfers: !state.filterTransfer.twoTransfers };
+      newFT.all = Object.values(newFT).slice(1).every(Boolean);
       return { ...state, filterTransfer: newFT };
     }
     case 'THREETRANSFERS': {
-      const newThreeTransfers = !state.filterTransfer.threeTransfers;
-      const newFT = {
-        ...state.filterTransfer,
-        threeTransfers: newThreeTransfers,
-      };
-      newFT.all = newFT.noTransfers && newFT.oneTransfers && newFT.twoTransfers && newFT.threeTransfers;
+      const newFT = { ...state.filterTransfer, threeTransfers: !state.filterTransfer.threeTransfers };
+      newFT.all = Object.values(newFT).slice(1).every(Boolean);
       return { ...state, filterTransfer: newFT };
     }
+    case 'FETCH_ID':
+      return { ...state, loading: true, error: null };
+    case 'FETCH_ID_SUCCESS':
+      return { ...state, loading: false, id: action.payload.searchId };
+    case 'FETCH_ID_FAILURE':
+      return { ...state, loading: false, error: action.error };
+    case 'FETCH_TICKET':
+      return { ...state, loading: true, error: null };
+    case 'FETCH_TICKET_SUCCESS':
+      return { ...state, loading: false, tickets: action.payload };
+    case 'FETCH_TICKET_FAILURE':
+      return { ...state, loading: false, error: action.error };
+    case 'FETCH_TICKET_UPDATE':
+      return { ...state, loading: false, tickets: action.payload };
+    case 'BURGER':
+      return { ...state, btStatus: !state.btStatus };
     default:
       return state;
   }
